@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Orders> 
+
+@{
+}
+<div style="width:100%" class="mt-2">
+    <h3 data="display-6"> Thank You for ordering with us!!! Your order will reach you shortly</h3>
+    <a href="/Home" class="btn btn-primary my-2">Back</a>
+
+    <h4>My Orders</h4>
+    @if (Model != null && Model.Count() > 0)
+    {
+        <table class="table table-striped">
+            <tr>
+                <th>OrderDate</th>
+            </tr>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.OrderDate.ToString("dd-MM-yyyy")</td>
+                </tr>
+                @if (order.OrderDetails != null && order.OrderDetails.Count > 0)
+                {
+                    <tr>
+                        <td>
+                            <table class="table table-striped">
+                                <tr>
+                                    <td>
+                                        Amount to pay:
+                                    </td>
+                                    <td>
+                                        @(order.OrderDetails.Select(item => item.Pizza.Price * item.Quantity).Sum())
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Orders</th>
+                                    <th>Image</th>
+                                    <th>Category</th>
+                                    <th>Unit Price(INR)</th>
+                                    <th>Total Price</th>
+                                </tr>
+                                @foreach (var item in order.OrderDetails)
+                                {
+                                    <tr>
+                                        <td>@item.Pizza.Name</td>
+                                        <td>
+                                            @if (string.IsNullOrEmpty(item.Pizza.Image))
+                                            {
+                                                <img src="/images/NoImage.png" style="width:80px;height:100px" />
+                                            }
+                                            else
+                                            {
+                                                <img src="/images/@item.Pizza.Image" style="width:80px;height:100px" />
+                                            }
+                                        </td>
+                                        <td>@item.Pizza.Category.Name</td>
+                                        <td>@item.Pizza.Price X @item.Quantity</td>
+                                        <td> @(item.Pizza.Price * item.Quantity) </td>
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+
+    }
+    else
+    {
+        <h5>No orders</h5>
+    }
+</div>

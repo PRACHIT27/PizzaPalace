@@ -1,0 +1,88 @@
+﻿@model PizzaDisplay
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="my-2">
+    <form asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center">
+        <div class="col-12">
+            <label class="visually-hidden" for="categoryId">Catrgories</label>
+            <select class="form-select" id="categoryId" name="categ oryId">
+                <option selected>Categories..</option>
+                @foreach (var category in Model.Category)
+                {
+                    <option selected="@(category.Id == Model.CategoryId)" value="@category.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-12">
+            <label class="visually-hidden" for="sterm">Search by title</label>
+            <div class="input-group">
+                <div class="input-group-text"></div>
+                <input type="text" class="form-control" value="@Model.STerm" id="sterm" name="sterm" placeholder="Sarch by title">
+            </div>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" id="searchSubmit" class="btn btn-primary">Search</button>
+            <a href="/Home/Index" class="btn btn-dark">Reset</a>
+        </div>
+    </form>
+</div>
+
+
+<div class="w-100 mt-4 d-flex flex-wrap ">
+    @foreach (var pizza in Model.Pizza)
+    {
+        <div class="card mx-3 mb-4" style="width: 15rem;" >
+            @if (string.IsNullOrEmpty(pizza.Image))
+            {
+                <img style="width:100%;height:180px" src="/images/NoImage.png" class="card-img-top" alt="...">
+
+            }
+            else
+            {
+                <img style="width:100%;height:180px" src="/images/@pizza.Image" class="card-img-top" alt="...">
+            }
+            <div class="card-body">
+                <h5 class="card-title">@pizza.Name</h5>
+                <p class="card-text">
+                    @{
+                        // Assuming you have a specific pizza model object (e.g., pizzaModel) with CategoryId
+                        int pizzaCategoryId = pizza.CategoryId;
+
+                        // Fetch the CategoryName based on the CategoryId from the Category table
+                        string categoryName = Model.Category.FirstOrDefault(c => c.Id == pizza.CategoryId)?.Name;
+                    }
+                    <b>Category: </b>@categoryName <br />
+                    <b>Description: </b>@pizza.Description<br />
+                    <b>Size: </b>@pizza.Size<br/>
+                    <b>Price:$ </b>@pizza.Price <br/>
+                </p>
+                <button type="button" onclick=add(@pizza.Id) id="@pizza.Name" class="btn btn-primary">Add to cart</button>
+            </div>
+        </div>
+    }
+</div>
+@section Scripts{
+
+    <script>
+        async function add(pizzaId) {
+            var usernameEl = document.getElementById("username");
+            if (usernameEl == null) {
+                window.location.href = "/Identity/Account/Login";     
+            }
+            try {
+                var response = await fetch(`/Cart/AddItem?pizzaId=${pizzaId}`);
+                if (response.status == 200) {
+                    var result = await response.json();
+                    var cartCountEl = document.getElementById("cartCount");
+                    cartCountEl.innerHTML = result;
+                }
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
+    </script>
+}

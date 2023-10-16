@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAeCQ0Y2P6PkOn4mRN0/1gVAAAAAACAAAAAAAQZgAAAAEAACAAAABaXZy+a5gtzfZ5JNdL8qoMsrvYOqGBIeDrsr7KpvX7HAAAAAAOgAAAAAIAACAAAABziRANShTuyuXRv38Z8nSCKCRQeHbmBmTt1lESGSoRdyAAAADPCFZe8EuMK8L3kzXE7EWWGwSMtyl1GvUY/2c7bA/F9EAAAAD3BwPCWOgkPcOGoUwNG9Cok6TIIi4T5g+qOaZaCiLDeTl2w8hTXbRfD8HxAbi+IrrYpvgZVR/q3/i9kt0fJ+jX</EncryptedPassword>
+    <History>True|2023-10-16T07:50:37.5208148Z;False|2023-10-16T13:18:18.6497332+05:30;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Server=vm-pizzaPalace%3bDatabase=aspnet-Pizza%3bTrusted_Connection=True%3bMultipleActiveResultSets=true</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+  <ItemGroup>
+    <EFMigrations Include="PizzaPalace.Data.ApplicationDbContext">
+      <Value>Server=vm-pizzaPalace%3bDatabase=aspnet-Pizza%3bTrusted_Connection=True%3bMultipleActiveResultSets=true</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>
